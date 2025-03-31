@@ -1,17 +1,16 @@
 import React, { useState } from 'react'
 import DecrypterKeyInput from './DecrypterKeyInput';
+import { useContext } from 'react';
+import cipherContext from '../context/cipherContext';
 
 function Input() {
-
+const {cipherText  } = useContext(cipherContext)
     const [input, setInput] = useState('')
     function handleChange(e) {
-        // console.log(e.target.value);
 
         setInput(e.target.value.toUpperCase())
-        // console.log(e.target.value);
 
     }
-
     const handleKeydown = (e) => {
         if (e.key === ' ' || !isNaN(e.key)) {
             e.preventDefault();
@@ -20,8 +19,8 @@ function Input() {
     }
     return (
         <div  >
-            <input value={input} onChange={handleChange} onKeyDown={handleKeydown} style={{ width: '100%', height: '30px', marginBottom: '1rem' }} type="text" placeholder='Enter your chipher' />
-            <DecrypterKeyInput input={input} setInput={setInput} />
+            <input value={input ? input : cipherText.toUpperCase() } onChange={handleChange}  className='input' onKeyDown={handleKeydown} type="text" placeholder='Enter your chipher' />
+            <DecrypterKeyInput input={input ? input : cipherText } setInput={setInput} />
         </div>
     )
 }
